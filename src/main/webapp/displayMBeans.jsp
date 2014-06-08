@@ -79,7 +79,6 @@
 <%
     out.println("<table width='100%' cellspacing='1' cellpadding='1' border='1'>");
     Iterator mbeans = (Iterator) request.getAttribute("mbeans");
-    int i = 0;
     while (mbeans.hasNext()) {
         DomainData domainData = (DomainData) mbeans.next();
         out.println(" <tr>");
@@ -93,8 +92,8 @@
         out.println("    <ul>");
         MBeanData[] data = domainData.getData();
         for (int d = 0; d < data.length; d++) {
-            String name = data[d].getObjectName().toString();
-            String properties = translateMetaCharacters(data[d].getNameProperties());
+            String name = data[d].getObjectName().toString().replaceAll("%(?![0-9a-fA-F]{2})", "%25");
+            String properties = translateMetaCharacters(data[d].getNameProperties()).replaceAll("%(?![0-9a-fA-F]{2})", "%25");
             out.println("     <li><a href=\"HtmlAdaptor?action=inspectMBean&amp;name=" + URLEncoder.encode(name,
                     "UTF-8") + "\">" + URLDecoder.decode(properties, "UTF-8") + "</a></li>");
         }
