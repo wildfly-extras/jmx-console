@@ -25,6 +25,8 @@ import java.beans.IntrospectionException;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
 import java.lang.management.ManagementFactory;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -39,11 +41,11 @@ import javax.management.MBeanParameterInfo;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
-import org.wildfly.jmx.adaptor.model.DomainData;
-import org.wildfly.jmx.adaptor.model.MBeanData;
 import org.jboss.logging.Logger;
 import org.jboss.util.Classes;
 import org.jboss.util.propertyeditor.PropertyEditors;
+import org.wildfly.jmx.adaptor.model.DomainData;
+import org.wildfly.jmx.adaptor.model.MBeanData;
 
 /**
  * Utility methods related to the MBeanServer interface
@@ -53,7 +55,9 @@ import org.jboss.util.propertyeditor.PropertyEditors;
  */
 public class Server {
 
-    static Logger log = Logger.getLogger(Server.class);
+    private static final Logger log = Logger.getLogger(Server.class);
+
+    private static Collection<String> omittedDomains = Arrays.asList("jboss.jsr77");
 
     public static MBeanServer getMBeanServer() {
         // TODO - could be considered JBoss API?
@@ -71,6 +75,9 @@ public class Server {
             Iterator objectNamesIter = objectNames.iterator();
             while (objectNamesIter.hasNext()) {
                 ObjectName name = (ObjectName) objectNamesIter.next();
+                if (omittedDomains.contains(name.getDomain())) {
+                    continue;
+                }
                 MBeanInfo info = server.getMBeanInfo(name);
                 String domainName = name.getDomain();
                 MBeanData mbeanData = new MBeanData(name, info);
