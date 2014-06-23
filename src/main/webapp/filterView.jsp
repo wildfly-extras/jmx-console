@@ -1,5 +1,5 @@
 <%@page contentType="text/html"
-        import="java.util.Iterator,org.wildfly.jmx.adaptor.control.Server,org.wildfly.jmx.adaptor.model.DomainData" %>
+        import="java.util.Iterator,org.wildfly.extras.jmxconsole.control.Server,org.wildfly.extras.jmxconsole.model.DomainData" %>
 <html>
 <head>
     <title>JBoss Object Index</title>

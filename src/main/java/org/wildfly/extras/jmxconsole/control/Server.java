@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.wildfly.jmx.adaptor.control;
+package org.wildfly.extras.jmxconsole.control;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyEditor;
@@ -41,11 +41,12 @@ import javax.management.MBeanParameterInfo;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
-import org.jboss.logging.Logger;
 import org.jboss.util.Classes;
 import org.jboss.util.propertyeditor.PropertyEditors;
-import org.wildfly.jmx.adaptor.model.DomainData;
-import org.wildfly.jmx.adaptor.model.MBeanData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wildfly.extras.jmxconsole.model.DomainData;
+import org.wildfly.extras.jmxconsole.model.MBeanData;
 
 /**
  * Utility methods related to the MBeanServer interface
@@ -55,7 +56,7 @@ import org.wildfly.jmx.adaptor.model.MBeanData;
  */
 public class Server {
 
-    private static final Logger log = Logger.getLogger(Server.class);
+    private static final Logger log = LoggerFactory.getLogger(Server.class);
 
     private static Collection<String> omittedDomains = Arrays.asList("jboss.jsr77");
 

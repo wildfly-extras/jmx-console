@@ -24,11 +24,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.wildfly.jmx-console</groupId>
+    <groupId>org.wildfly.extras.jmx-console</groupId>
     <artifactId>jmx-console</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
-    <name>WildFly: Legacy jmx-console</name>
+    <name>WildFly JMX Console</name>
 
     <packaging>war</packaging>
 
@@ -51,8 +51,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging</artifactId>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

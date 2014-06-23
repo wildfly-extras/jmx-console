@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.wildfly.jmx.adaptor.html;
+package org.wildfly.extras.jmxconsole.html;
 
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -38,20 +38,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.wildfly.jmx.adaptor.control.OpResultInfo;
-import org.wildfly.jmx.adaptor.control.Server;
-import org.wildfly.jmx.adaptor.model.MBeanData;
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wildfly.extras.jmxconsole.control.OpResultInfo;
+import org.wildfly.extras.jmxconsole.control.Server;
+import org.wildfly.extras.jmxconsole.model.MBeanData;
 
 /**
- * The HTML adaptor controller servlet.
+ * The HTML jmxconsole controller servlet.
  *
  * @author Scott.Stark@jboss.org
  * @author Dimitris.Andreadis@jboss.org
  */
 public class HtmlAdaptorServlet extends HttpServlet {
 
-    private static Logger log = Logger.getLogger(HtmlAdaptorServlet.class);
+    private static Logger log = LoggerFactory.getLogger(HtmlAdaptorServlet.class);
 
     private static final String ACTION_PARAM = "action";
 

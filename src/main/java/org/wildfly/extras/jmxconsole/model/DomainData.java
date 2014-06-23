@@ -19,31 +19,55 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.wildfly.jmx.adaptor.control;
+package org.wildfly.extras.jmxconsole.model;
+
+import java.util.Arrays;
+import java.util.TreeSet;
 
 /**
- * A simple tuple of an mbean operation name, index, signature, args and operation result.
+ * The MBeanData for a given JMX domain name
  *
  * @author Scott.Stark@jboss.org
  * @author Dimitris.Andreadis@jboss.org
  */
-public class OpResultInfo {
+public class DomainData {
 
-    public String name;
+    String domainName;
 
-    public String[] signature;
+    TreeSet<MBeanData> domainData = new TreeSet<MBeanData>();
 
-    public String[] args;
-
-    public Object result;
-
-    public OpResultInfo() {
+    /**
+     * Creates a new instance of DomainData
+     */
+    public DomainData(String domainName) {
+        this.domainName = domainName;
     }
 
-    public OpResultInfo(String name, String[] signature, String[] args, Object result) {
-        this.name = name;
-        this.signature = signature;
-        this.args = args;
-        this.result = result;
+    public DomainData(String domainName, MBeanData[] data) {
+        this.domainName = domainName;
+        domainData.addAll(Arrays.asList(data));
+    }
+
+    public int hashCode() {
+        return domainName.hashCode();
+    }
+
+    public boolean equals(Object obj) {
+        DomainData data = (DomainData) obj;
+        return domainName.equals(data.domainName);
+    }
+
+    public String getDomainName() {
+        return domainName;
+    }
+
+    public MBeanData[] getData() {
+        MBeanData[] data = new MBeanData[domainData.size()];
+        domainData.toArray(data);
+        return data;
+    }
+
+    public void addData(MBeanData data) {
+        domainData.add(data);
     }
 }

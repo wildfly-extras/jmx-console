@@ -1,14 +1,13 @@
-<?xml version="1.0"?>
-<!DOCTYPE web-app PUBLIC
-        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-        "http://java.sun.com/dtd/web-app_2_3.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
-<web-app>
     <description>The standard web descriptor for the html adaptor</description>
 
     <servlet>
         <servlet-name>HtmlAdaptor</servlet-name>
-        <servlet-class>org.wildfly.jmx.adaptor.html.HtmlAdaptorServlet</servlet-class>
+        <servlet-class>org.wildfly.extras.jmxconsole.html.HtmlAdaptorServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DisplayMBeans</servlet-name>
@@ -40,37 +39,30 @@
         <url-pattern>/DisplayOpResult</url-pattern>
     </servlet-mapping>
 
-    <!-- Display a generic error page when HTTP Status 500 exceptions occur. -->
-    <error-page>
-        <error-code>500</error-code>
-        <location>/genericError.jsp</location>
-    </error-page>
-
-    <!-- A security constraint that restricts access to the HTML JMX console
-    to users with the role JBossAdmin. Edit the roles to what you want and
-    uncomment the WEB-INF/jboss-web.xml/security-domain element to enable
-    secured access to the HTML JMX console.
-    <security-constraint>
-      <web-resource-collection>
-        <web-resource-name>HtmlAdaptor</web-resource-name>
-        <description>An example security config that only allows users with the
-          role JBossAdmin to access the HTML JMX console web application
-        </description>
-        <url-pattern>/*</url-pattern>
-      </web-resource-collection>
-      <auth-constraint>
-        <role-name>JBossAdmin</role-name>
-      </auth-constraint>
-    </security-constraint>
+    <!--
+        Security constraints. Uses Application realm (present in Wildfly's default configuration) and
+        jmx-admin roles.
     -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>JMX Console restricted access</web-resource-name>
+            <description>An example security config that only allows users with the
+                role JBossAdmin to access the HTML JMX console web application
+            </description>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>jmx-console</role-name>
+        </auth-constraint>
+    </security-constraint>
 
     <login-config>
         <auth-method>BASIC</auth-method>
-        <realm-name>JBoss JMX Console</realm-name>
+        <realm-name>ApplicationRealm</realm-name>
     </login-config>
 
     <security-role>
-        <role-name>JBossAdmin</role-name>
+        <role-name>jmx-console</role-name>
     </security-role>
 
 </web-app>

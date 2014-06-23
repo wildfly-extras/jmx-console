@@ -24,8 +24,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     <meta http-equiv="cache-control" content="no-cache"/>
 </head>
 
-<jsp:useBean id='opResultInfo' class='org.wildfly.jmx.adaptor.control.OpResultInfo'
-             type='org.wildfly.jmx.adaptor.control.OpResultInfo' scope='request'/>
+<jsp:useBean id='opResultInfo' class='org.wildfly.extras.jmxconsole.control.OpResultInfo'
+             type='org.wildfly.extras.jmxconsole.control.OpResultInfo' scope='request'/>
 <%
     if (opResultInfo.name == null) {
 %>

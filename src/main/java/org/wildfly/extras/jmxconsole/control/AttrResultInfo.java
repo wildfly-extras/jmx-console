@@ -19,55 +19,49 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.wildfly.jmx.adaptor.model;
+package org.wildfly.extras.jmxconsole.control;
 
-import java.util.Arrays;
-import java.util.TreeSet;
+import java.beans.PropertyEditor;
 
 /**
- * The MBeanData for a given JMX domain name
+ * A simple tuple of an mbean operation name, signature and result.
  *
  * @author Scott.Stark@jboss.org
  * @author Dimitris.Andreadis@jboss.org
  */
-public class DomainData {
+public class AttrResultInfo {
 
-    String domainName;
+    public String name;
 
-    TreeSet<MBeanData> domainData = new TreeSet<MBeanData>();
+    public PropertyEditor editor;
 
-    /**
-     * Creates a new instance of DomainData
-     */
-    public DomainData(String domainName) {
-        this.domainName = domainName;
+    public Object result;
+
+    public Throwable throwable;
+
+    public AttrResultInfo(String name, PropertyEditor editor, Object result, Throwable throwable) {
+        this.name = name;
+        this.editor = editor;
+        this.result = result;
+        this.throwable = throwable;
     }
 
-    public DomainData(String domainName, MBeanData[] data) {
-        this.domainName = domainName;
-        domainData.addAll(Arrays.asList(data));
-    }
-
-    public int hashCode() {
-        return domainName.hashCode();
-    }
-
-    public boolean equals(Object obj) {
-        DomainData data = (DomainData) obj;
-        return domainName.equals(data.domainName);
-    }
-
-    public String getDomainName() {
-        return domainName;
-    }
-
-    public MBeanData[] getData() {
-        MBeanData[] data = new MBeanData[domainData.size()];
-        domainData.toArray(data);
-        return data;
-    }
-
-    public void addData(MBeanData data) {
-        domainData.add(data);
+    public String getAsText() {
+        if (throwable != null) {
+            return throwable.toString();
+        }
+        if (result != null) {
+            try {
+                if (editor != null) {
+                    editor.setValue(result);
+                    return editor.getAsText();
+                } else {
+                    return result.toString();
+                }
+            } catch (Exception e) {
+                return "String representation of " + name + "unavailable";
+            } // end of try-catch
+        }
+        return null;
     }
 }
